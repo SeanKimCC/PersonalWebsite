@@ -23,10 +23,12 @@ const getStarPos = (w, h, mouseX, mouseY) => {
   var stars = [];
   var hr = h;
   var wr = w;
-  var count =  w * 0.1;
+  var count =  w * 0.2;
   if (count > 200) count = 200;
   for (var i=0; i<count; i++) {
-    var star = {x: Math.random()*wr, y: Math.random()*hr};
+    const xCoor = Math.random()*wr;
+    const yCoor = Math.random()*hr;
+    var star = {origX: xCoor, origY: yCoor, x: xCoor, y: yCoor};
     var dist = Math.hypot(star.x - mouseX, star.y - mouseY);
     // console.log(dist);
     var brightnessAmp = 0;
@@ -39,7 +41,8 @@ const getStarPos = (w, h, mouseX, mouseY) => {
       sizeAmp = (20/dist)*5;
     }
     star.brightness = 1 - brightnessAmp;
-    star.size = 5 + sizeAmp;
+    star.origSize = (Math.random()+0.3) * 5 + sizeAmp;
+    star.size = star.origSize;
     stars.push( star );
   }
   // console.log("here", stars);
@@ -56,9 +59,11 @@ const updateStarBrightness = (stars, mouseX, mouseY) => {
     }else if(dist < 100){
       brightnessAmp = (20/dist)*0.5;
       sizeAmp = (20/dist)*5;
+    }else{
+
     }
     stars[i].brightness = 1 - brightnessAmp;
-    stars[i].size = 5+sizeAmp;
+    stars[i].size = stars[i].origSize+sizeAmp;
   }
   return stars;
   
@@ -88,6 +93,7 @@ const updateStarBrightness = (stars, mouseX, mouseY) => {
 
 const StarsCanvas = () => {
   let ref = useRef();
+  
 
   // const [width, setWidth] = useState(window.innerWidth);
   // const [height, setHeight] = useState(window.innerHeight);
@@ -140,6 +146,87 @@ const StarsCanvas = () => {
     canvas.style.width = `${windowSize.width}px`;
     canvas.style.height = `${windowSize.height}px`;
 
+
+    function starFn(starElem){
+      this.x = starElem.x * ratio;
+      this.y = starElem.y * ratio;
+      this.size = starElem.size;
+      this.brightness = starElem.brightness;
+      this.shiningConstant = starElem.shiningConstant;
+
+
+      this.draw = function(){
+        
+
+        c.beginPath();
+        c.moveTo(this.x,this.y);
+        c.lineTo(this.x+this.size, this.y+this.size - (this.size*2/5));
+        c.lineTo(this.x+this.size+this.size, this.y);
+        c.lineTo(this.x+this.size+(this.size*2/5), this.y+this.size);
+        c.lineTo(this.x+this.size+this.size, this.y+this.size+this.size);
+        c.lineTo(this.x+this.size, this.y+this.size+(this.size*2/5));
+        c.lineTo(this.x, this.y+this.size+this.size);
+        c.lineTo(this.x+this.size-(this.size*2/5), this.y+this.size);
+        c.lineTo(this.x,this.y);
+        c.fillStyle = "rgba(255,255,255,"+this.brightness+")";
+        c.fill();
+      }
+
+      
+    }
+
+    function squareStarsFn(starElem){
+      this.x = starElem.x * ratio;
+      this.y = starElem.y * ratio;
+      this.size = starElem.size;
+      this.brightness = starElem.brightness;
+      this.starSpeed = 0.25;
+      // this.shiningConstant = starElem.shiningConstant;
+      this.draw = function(){
+
+        c.beginPath();
+        c.rect(this.x-this.size/2, this.y-this.size/2, this.size, this.size);
+        c.fillStyle = "rgba(255,255,255,1)";
+        c.fill();
+      }
+      this.update = function(){
+        const randNum1 = Math.random() - 0.5;
+        const randNum2 = Math.random() - 0.5;
+
+        var upDownStill = 0;
+        if(randNum1 > 0.1){
+          upDownStill = this.starSpeed;
+        } else if(randNum1 < 0.1) {
+          upDownStill = -this.starSpeed;
+        }
+
+        var leftRightStill = 0;
+        if(randNum2 > 0.1){
+          leftRightStill = this.starSpeed;
+        } else if(randNum2 < 0.1) {
+          leftRightStill = -this.starSpeed;
+        }
+
+        if(this.x > (starElem.origX * ratio)  && Math.abs(this.x - starElem.origX * ratio )>= 5){
+          starElem.x -= 1/ratio;
+        } else if (this.x < (starElem.origX * ratio)  && Math.abs(this.x - starElem.origX * ratio ) >= 5){
+          starElem.x += 1/ratio;
+        } else{
+          starElem.x += leftRightStill/ratio;
+        }
+
+        if(this.y > (starElem.origY * ratio)  && Math.abs(this.y - starElem.origY * ratio )>= 5){
+          starElem.y -= 1/ratio;
+        } else if (this.y < (starElem.origY * ratio)  && Math.abs(this.y - starElem.origY * ratio ) >= 5){
+          starElem.y += 1/ratio;
+        } else{
+          starElem.y += upDownStill/ratio;
+        }
+        this.draw();
+
+      }
+    }
+
     let requestId;
     const render = () => {
       c.clearRect(0, 0, canvas.width, canvas.height);
@@ -154,24 +241,28 @@ const StarsCanvas = () => {
       // c.fill();
       // i += 0.05;
       for(var i = 0; i < starsPos.length; i++){
+        // var star = new starFn(starsPos[i]);
+        // star.draw();
+        var sqrStar = new squareStarsFn(starsPos[i]);
+        sqrStar.update();
+        // let x, y, size, brightness;
+        // x = starsPos[i].x * ratio;
+        // y = starsPos[i].y * ratio;
+        // size = starsPos[i].size;
 
-        let x, y, size, brightness;
-        x = starsPos[i].x * ratio;
-        y = starsPos[i].y * ratio;
-        size = starsPos[i].size;
+        // c.beginPath();
+        // c.moveTo(x,y);
+        // c.lineTo(x+size, y+size - (size*2/5));
+        // c.lineTo(x+size+size, y);
+        // c.lineTo(x+size+(size*2/5), y+size);
+        // c.lineTo(x+size+size, y+size+size);
+        // c.lineTo(x+size, y+size+(size*2/5));
+        // c.lineTo(x, y+size+size);
+        // c.lineTo(x+size-(size*2/5), y+size);
+        // c.lineTo(x,y);
+        // c.fillStyle = "rgba(255,255,255,"+starsPos[i].brightness+")";
+        // c.fill();
 
-        c.beginPath();
-        c.moveTo(x,y);
-        c.lineTo(x+size, y+size - (size*2/5));
-        c.lineTo(x+size+size, y);
-        c.lineTo(x+size+(size*2/5), y+size);
-        c.lineTo(x+size+size, y+size+size);
-        c.lineTo(x+size, y+size+(size*2/5));
-        c.lineTo(x, y+size+size);
-        c.lineTo(x+size-(size*2/5), y+size);
-        c.lineTo(x,y);
-        c.fillStyle = "rgba(255,255,255,"+starsPos[i].brightness+")";
-        c.fill();
       }
       requestId = requestAnimationFrame(render);
     };
@@ -196,7 +287,7 @@ const StarsCanvas = () => {
 
 
 function App(){
- return(<StarsCanvas/>)
+ return(<div><StarsCanvas/></div>)
 }
 
 
