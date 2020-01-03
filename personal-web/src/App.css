@@ -1,3 +1,7 @@
+body{
+  overflow: hidden;
+  font-family: Raleway;
+}
 .App {
   text-align: center;
 }
@@ -39,5 +43,34 @@
 
 .main-canvas{
   /*background-color: #252934;*/
-  background-color: black;
+  /*background-color: black;*/
+  background-image: linear-gradient(black,#252934);
+}
+.title-container{
+  position: fixed;
+  font-size: 3em;
+  width: 100%;
+  text-align: center;
+  color: white;
+  /*margin-left: -218px;*/
+  top: 50%;
+  margin-top: -100px;
+}
+#nameTitle{
+  color: #1bb575;
+}
+.main-link{
+  font-size: 0.4em;
+  margin: 0 12px;
+  color: white;
+  -webkit-transition: text-shadow 0.5s; /* Safari prior 6.1 */
+  transition: text-shadow 0.5s;
+}
+.main-link:link, .main-link:visited{
+  text-decoration: none;
+}
+.main-link:hover{
+  cursor: pointer;
+  text-shadow: 2px 2px 8px white;
+  
 }
