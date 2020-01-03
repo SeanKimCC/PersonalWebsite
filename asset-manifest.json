@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.0fd6e276.chunk.css",
-    "main.js": "/static/js/main.6bf4e948.chunk.js",
-    "main.js.map": "/static/js/main.6bf4e948.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.1b3e1495.js",
-    "runtime-main.js.map": "/static/js/runtime-main.1b3e1495.js.map",
-    "static/js/2.24d8a470.chunk.js": "/static/js/2.24d8a470.chunk.js",
-    "static/js/2.24d8a470.chunk.js.map": "/static/js/2.24d8a470.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.11d35843f2877134dcc49b115cec4d97.js": "/precache-manifest.11d35843f2877134dcc49b115cec4d97.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.0fd6e276.chunk.css.map": "/static/css/main.0fd6e276.chunk.css.map",
-    "static/js/2.24d8a470.chunk.js.LICENSE": "/static/js/2.24d8a470.chunk.js.LICENSE",
-    "static/media/Raleway-SemiBold.ttf": "/static/media/Raleway-SemiBold.17ba6410.ttf",
-    "static/media/Sean_Resume.pdf": "/static/media/Sean_Resume.f70b38ba.pdf"
+    "main.css": "/my-web/static/css/main.861a80cc.chunk.css",
+    "main.js": "/my-web/static/js/main.c9cb467c.chunk.js",
+    "main.js.map": "/my-web/static/js/main.c9cb467c.chunk.js.map",
+    "runtime-main.js": "/my-web/static/js/runtime-main.490278c0.js",
+    "runtime-main.js.map": "/my-web/static/js/runtime-main.490278c0.js.map",
+    "static/js/2.24d8a470.chunk.js": "/my-web/static/js/2.24d8a470.chunk.js",
+    "static/js/2.24d8a470.chunk.js.map": "/my-web/static/js/2.24d8a470.chunk.js.map",
+    "index.html": "/my-web/index.html",
+    "precache-manifest.587d3f857dfa06f1f9e1f674a3dd7f61.js": "/my-web/precache-manifest.587d3f857dfa06f1f9e1f674a3dd7f61.js",
+    "service-worker.js": "/my-web/service-worker.js",
+    "static/css/main.861a80cc.chunk.css.map": "/my-web/static/css/main.861a80cc.chunk.css.map",
+    "static/js/2.24d8a470.chunk.js.LICENSE": "/my-web/static/js/2.24d8a470.chunk.js.LICENSE",
+    "static/media/Raleway-SemiBold.ttf": "/my-web/static/media/Raleway-SemiBold.17ba6410.ttf",
+    "static/media/Sean_Resume.pdf": "/my-web/static/media/Sean_Resume.f70b38ba.pdf"
   },
   "entrypoints": [
-    "static/js/runtime-main.1b3e1495.js",
+    "static/js/runtime-main.490278c0.js",
     "static/js/2.24d8a470.chunk.js",
-    "static/css/main.0fd6e276.chunk.css",
-    "static/js/main.6bf4e948.chunk.js"
+    "static/css/main.861a80cc.chunk.css",
+    "static/js/main.c9cb467c.chunk.js"
   ]
 }
