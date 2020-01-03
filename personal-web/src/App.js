@@ -21,7 +21,6 @@ const getPixelRatio = context => {
 
 
 const getStarPos = (w, h, mouseX, mouseY) => {
-  console.log(w, h);
   var stars = [];
   var count =  w * 0.1;
   if (count > 400) count = 400;
@@ -30,7 +29,6 @@ const getStarPos = (w, h, mouseX, mouseY) => {
     const yCoor = Math.random()*h;
     var star = {origX: xCoor, origY: yCoor, x: xCoor, y: yCoor};
     var dist = Math.hypot(star.x - mouseX, star.y - mouseY);
-    // console.log(dist);
     var brightnessAmp = 0;
     var sizeAmp = 0;
     if(dist <= 20){
@@ -45,7 +43,6 @@ const getStarPos = (w, h, mouseX, mouseY) => {
     star.size = star.origSize;
     stars.push( star );
   }
-  // console.log("here", stars);
   return stars
 }
 const updateStarBrightness = (stars, mouseX, mouseY) => {
@@ -94,15 +91,11 @@ const updateStarBrightness = (stars, mouseX, mouseY) => {
 const StarsCanvas = () => {
   let ref = useRef();
   
-
-  // const [width, setWidth] = useState(window.innerWidth);
-  // const [height, setHeight] = useState(window.innerHeight);
   const [windowSize, setWindowSize] = useState({width: window.innerWidth, height: window.innerHeight});
   const [mousePos, setMousePos] = useState({x : windowSize.width/2, y:windowSize.height/2});
   const [starsPos, setStarsPos] = useState(getStarPos(windowSize.width, windowSize.height, mousePos.x, mousePos.y));
 
   const updateWidthAndHeight = () => {
-    // console.log("resized");
     setWindowSize({width: window.innerWidth, height: window.innerHeight});
     setStarsPos(getStarPos(window.innerWidth, window.innerHeight, window.innerWidth, window.innerHeight));
   };
