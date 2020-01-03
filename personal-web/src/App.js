@@ -1,4 +1,5 @@
 import React from 'react';
+import pdf from './assets/Sean_Resume.pdf'
 import './App.css';
 import { useEffect } from 'react';
 import { useRef } from 'react';
@@ -20,14 +21,13 @@ const getPixelRatio = context => {
 
 
 const getStarPos = (w, h, mouseX, mouseY) => {
+  console.log(w, h);
   var stars = [];
-  var hr = h;
-  var wr = w;
-  var count =  w * 0.2;
-  if (count > 200) count = 200;
+  var count =  w * 0.1;
+  if (count > 400) count = 400;
   for (var i=0; i<count; i++) {
-    const xCoor = Math.random()*wr;
-    const yCoor = Math.random()*hr;
+    const xCoor = Math.random()*w;
+    const yCoor = Math.random()*h;
     var star = {origX: xCoor, origY: yCoor, x: xCoor, y: yCoor};
     var dist = Math.hypot(star.x - mouseX, star.y - mouseY);
     // console.log(dist);
@@ -55,10 +55,10 @@ const updateStarBrightness = (stars, mouseX, mouseY) => {
     var brightnessAmp = 0;
     if(dist <= 20){
       brightnessAmp = 0.5;
-      sizeAmp = 5;
+      sizeAmp = 8;
     }else if(dist < 100){
       brightnessAmp = (20/dist)*0.5;
-      sizeAmp = (20/dist)*5;
+      sizeAmp = (20/dist)*8;
     }else{
 
     }
@@ -146,7 +146,6 @@ const StarsCanvas = () => {
     canvas.style.width = `${windowSize.width}px`;
     canvas.style.height = `${windowSize.height}px`;
 
-
     function starFn(starElem){
       this.x = starElem.x * ratio;
       this.y = starElem.y * ratio;
@@ -183,7 +182,8 @@ const StarsCanvas = () => {
       this.starSpeed = 0.25;
       // this.shiningConstant = starElem.shiningConstant;
       this.draw = function(){
-
+        c.shadowColor = "rgb(255,255,255)";
+        c.shadowBlur = 10;
         c.beginPath();
         c.rect(this.x-this.size/2, this.y-this.size/2, this.size, this.size);
         c.fillStyle = "rgba(255,255,255,1)";
@@ -222,6 +222,7 @@ const StarsCanvas = () => {
         } else{
           starElem.y += upDownStill/ratio;
         }
+
         this.draw();
 
       }
@@ -271,7 +272,7 @@ const StarsCanvas = () => {
     return () => {
       cancelAnimationFrame(requestId);
     };
-  }, [starsPos]);
+  });
   
 
 
@@ -287,7 +288,17 @@ const StarsCanvas = () => {
 
 
 function App(){
- return(<div><StarsCanvas/></div>)
+ return(<div>
+     <div className="title-container">
+       <span>Hello, I'm</span><span id="nameTitle"> Sean Kim</span><span>.</span>
+       <div className="link-container">
+         <a className="main-link" target="_blank" href="https://github.com/SeanKimCC">Github</a>
+         <a className="main-link" target="_blank" href={pdf}>Resume</a>
+       </div>
+       
+      </div>
+     <StarsCanvas/>
+   </div>)
 }
 
 
