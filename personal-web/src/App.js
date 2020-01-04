@@ -20,13 +20,16 @@ const getPixelRatio = context => {
 
 
 
-const getStarPos = (w, h, mouseX, mouseY) => {
+const getStarPos = (w, h, mouseX, mouseY, indic) => {
   var stars = [];
   var count =  w * 0.1;
+  var tempW = w;
+  var tempH = h;
   if (count > 400) count = 400;
   for (var i=0; i<count; i++) {
-    const xCoor = Math.random()*w;
-    const yCoor = Math.random()*h;
+    const xCoor = Math.random()*tempW;
+    const yCoor = Math.random()*tempH;
+    
     var star = {origX: xCoor, origY: yCoor, x: xCoor, y: yCoor};
     var dist = Math.hypot(star.x - mouseX, star.y - mouseY);
     var brightnessAmp = 0;
@@ -46,6 +49,7 @@ const getStarPos = (w, h, mouseX, mouseY) => {
   return stars
 }
 const updateStarBrightness = (stars, mouseX, mouseY) => {
+
   for(var i =0; i < stars.length; i++){
     var dist = Math.hypot(stars[i].x - mouseX, stars[i].y - mouseY);
     var sizeAmp = 0;
@@ -93,11 +97,11 @@ const StarsCanvas = () => {
   
   const [windowSize, setWindowSize] = useState({width: window.innerWidth, height: window.innerHeight});
   const [mousePos, setMousePos] = useState({x : windowSize.width/2, y:windowSize.height/2});
-  const [starsPos, setStarsPos] = useState(getStarPos(windowSize.width, windowSize.height, mousePos.x, mousePos.y));
+  const [starsPos, setStarsPos] = useState(getStarPos(window.innerWidth, window.innerHeight, mousePos.x, mousePos.y, 1));
 
   const updateWidthAndHeight = () => {
     setWindowSize({width: window.innerWidth, height: window.innerHeight});
-    setStarsPos(getStarPos(window.innerWidth, window.innerHeight, window.innerWidth, window.innerHeight));
+    setStarsPos(getStarPos(window.innerWidth, window.innerHeight, window.innerWidth, window.innerHeight, 2));
   };
   const updateMousePos = (e) => {
     //set moustX and Y to updated mouse location
@@ -121,12 +125,15 @@ const StarsCanvas = () => {
     return () => {
       window.removeEventListener("mousemove", updateMousePos);
     };
-  }, []);
+  });
 
   useEffect(() => {
     window.addEventListener("resize", updateWidthAndHeight);
-    return () => window.removeEventListener("resize", updateWidthAndHeight);
+    return () => {
+      window.removeEventListener("resize", updateWidthAndHeight);
+    };
   });
+
 
   useEffect(() => {
     let canvas = ref.current;
