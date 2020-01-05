@@ -290,7 +290,8 @@ const StarsCanvas = () => {
 function App(){
  return(<div>
      <div className="title-container">
-       <span>Hello, I'm</span><span id="nameTitle"> Sean Kim</span><span>.</span>
+       <span>Hello, I'm</span><span id="nameTitle"> Sean Kim</span>.<span></span><br/>
+       <span>I'm a Computer Engineering student.</span>
        <div className="link-container">
          <a className="main-link" target="_blank" href="https://github.com/SeanKimCC">Github</a>
          <a className="main-link" target="_blank" href={pdf}>Resume</a>
