@@ -1,5 +1,6 @@
 import React from 'react';
-import pdf from './assets/Sean_Resume.pdf'
+import resumepdf from './assets/Sean_Kim_CV.pdf';
+import LIFOpdf from './assets/LIFO_Korean.pdf';
 import './App.css';
 import { useEffect } from 'react';
 import { useRef } from 'react';
@@ -294,7 +295,8 @@ function App(){
        <span>I'm a Computer Engineering student.</span>
        <div className="link-container">
          <a className="main-link" target="_blank" href="https://github.com/SeanKimCC">Github</a>
-         <a className="main-link" target="_blank" href={pdf}>Resume</a>
+         <a className="main-link" target="_blank" href={resumepdf}>Resume</a>
+         <a className="hidden" target="_blank" href={LIFOpdf}>Resume</a>
        </div>
        
       </div>
